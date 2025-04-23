@@ -8,36 +8,35 @@ app.use(express.json());
 // Datos en memoria
 let products = [
   { id: 1, name: 'Laptop', price: 1500 },
-  { id: 2, name: 'Smartphone', price: 800 },
-  { id: 3, name: 'Headphones', price: 200 }
+  { id: 2, name: 'Mouse', price: 25 },
+  { id: 3, name: 'Keyboard', price: 100 }
 ];
 
-// GET /products - Obtener todos los productos
+// GET /products - Devuelve todos los productos
 app.get('/products', (req, res) => {
   res.json(products);
 });
 
-// GET /products/:id - Obtener producto por ID
+// GET /products/:id - Devuelve un producto por ID
 app.get('/products/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const product = products.find(p => p.id === id);
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ error: 'Producto no encontrado' });
+  
+  if (!product) {
+    return res.status(404).json({ error: 'Producto no encontrado' });
   }
+
+  res.json(product);
 });
 
-// POST /products - Agregar nuevo producto
+// POST /products - Agrega un nuevo producto
 app.post('/products', (req, res) => {
   const { id, name, price } = req.body;
 
-  if (products.find(p => p.id === id)) {
-    return res.status(400).json({ error: 'El ID ya existe' });
-  }
-
-  if (!id || !name || price == null) {
-    return res.status(400).json({ error: 'Datos incompletos' });
+  // Verifica si el ID ya existe
+  const exists = products.find(p => p.id === id);
+  if (exists) {
+    return res.status(400).json({ error: 'ID ya existe' });
   }
 
   const newProduct = { id, name, price };
@@ -45,7 +44,7 @@ app.post('/products', (req, res) => {
   res.status(201).json(newProduct);
 });
 
-// Iniciar servidor
+// Escucha en el puerto 3000
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
