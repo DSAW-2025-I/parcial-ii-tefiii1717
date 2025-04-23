@@ -43,3 +43,21 @@ Este examen evalúa tu capacidad para construir un backend básico usando Expres
 - Agregue el enlace del repositorio desplegado al README.
 
 ¡Buena suerte!
+
+# Express Products API
+
+## Descripción
+API RESTful básica para gestionar productos usando Express.js.
+
+## Endpoints
+
+- `GET /products` → Lista todos los productos.
+- `GET /products/:id` → Devuelve un producto por ID.
+- `POST /products` → Crea un nuevo producto.
+
+## Instrucciones
+
+```bash
+npm install
+npm start
+
